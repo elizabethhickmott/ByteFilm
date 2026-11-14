@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
-    <title>ByteFilm</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 </head>
 
@@ -17,43 +17,6 @@
         <button class="leaderboard-nav" id="leaderboardNav"><span>★</span> Leaderboard</button>
         <button class="login-nav" id="loginNav"><span>➤</span> Log-in</button>
     </header>
-
-   <main>
-    <section class="head-board">
-        <div class="head-board-copy">
-          <h1>Pick a film!<br><em>Then look check the box office.</em></h1>
-          <p class="sub">Think you can predict how much a film will make at box office? Enter a film, and give it a go! Then, see how your guess compares to others.</p>
-          <div class="stats">
-            <div><strong>01</strong><span> CHOOSE A FILM</span></div>
-            <i></i><div><strong>02</strong><span> MAKE YOUR GUESS</span></div>
-            <i></i><div><strong>03</strong><span> CHECK THE LEADERBOARD</span></div>
-          </div>
-        </div>
-
-        <div class="head-board-art">
-            <div class="disc"><div class="disc-shine"></div><div class="disc-hole"></div></div>
-            <div class="art"></div>
-            <div class="caption">INSERT A FILM!!<br>THEN MAKE A GUESS!</div>
-          </div>
-
-      </section>
-
-      <section class="shelf-section">
-        <div class="section-heading">
-            <p class="store"><u><b>DVD STORE</b></u></p>
-        </div>
-        <div class="shelf-grid">
-            <div class="shelf-img">
-                <img src="../images/dvd_shelf.png" alt="DVD shelf">
-            </div>
-        </div>
-        <div class="player">
-            <img class="player-img" src="../images/dvdPlayer_RemoveBackground.png" alt="DVD player">
-            <input type="text" class="movie-input" placeholder="Enter a movie...!">
-        </div>
-      
-      </section>
-
-   </main>
+    <main>{% block main %}{% endblock %}</main>>
 </body>
 </html>
