@@ -1,4 +1,6 @@
-﻿def main_training():
+﻿import pandas as pd
+
+def main_training(df: pd.DataFrame):
     pass
 
 if __name__ == "__main__":

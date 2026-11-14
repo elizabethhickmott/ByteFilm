@@ -35,7 +35,7 @@ def add_box_office():
     final_df = df_selected.reindex(columns=final_columns)
     final_df = final_df.astype({"imdb_id": "string", "rated": "string", "genre": "string", "imdb_rating": "float64",
                                 "metacritic_rating": "float64", "language": "string", "country": "string",
-                                "runtime": "string", "rotten_tomatoes": "string"})
+                                "runtime": "float64", "rotten_tomatoes": "float64"})
 
     for index, row in final_df.iterrows():
         movie_title = row["title"]
@@ -52,8 +52,18 @@ def add_box_office():
         final_df.at[index, "genre"] = data.get("Genre")
 
         final_df.at[index, "language"] = data.get("Language")
+        final_df.at[index, "rated"] = data.get("Rated")
         final_df.at[index, "country"] = data.get("Country")
-        final_df.at[index, "runtime"] = data.get("Runtime")
+        runtime = data.get("Runtime")
+        runtime_str = ""
+
+
+        if runtime is not None:
+            for char in runtime:
+                if char.isdigit():
+                    runtime_str += char
+
+        final_df.at[index, "runtime"] = pd.to_numeric(runtime_str, errors="coerce")
         final_df.at[index, "metacritic_rating"] = pd.to_numeric(data.get("Metascore"), errors="coerce")
         final_df.at[index, "imdb_rating"] = pd.to_numeric(data.get("imdbRating"), errors="coerce")
 
@@ -61,7 +71,7 @@ def add_box_office():
 
         for rating in ratings:
             if rating.get("Source") == "Rotten Tomatoes":
-                final_df.at[index, "rotten_tomatoes"] = rating["Value"]
+                final_df.at[index, "rotten_tomatoes"] = pd.to_numeric(rating["Value"][:-1], errors="coerce")
     return final_df
 
 
