@@ -1,2 +1,3 @@
 ﻿/.idea/
 /src/resources/database/
+/src/ml/OMDB_API_KEY.py
