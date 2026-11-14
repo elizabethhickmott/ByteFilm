@@ -32,17 +32,30 @@ ByteFilm
 </section>
 
 <section class="shelf-section">
+
     <div class="section-heading">
         <p class="store"><u><b>DVD STORE</b></u></p>
     </div>
+
     <div class="shelf-grid">
+
         <div class="shelf-img">
-            <img src="{{ url_for('static', filename='images/dvd_shelf.png') }}" alt="DVD shelf">
+            <img src="{{ url_for('static', filename='images/dvd_shelf.png') }}"
+                 alt="DVD shelf">
         </div>
+
     </div>
+
     <div class="player">
-        <img class="player-img" src="{{ url_for('static', filename='images/dvdPlayer_RemoveBackground.png')}}" alt="DVD player">
-        <input type="text" class="movie-input" placeholder="Enter a movie...!">
+        <img class="player-img"
+             src="{{ url_for('static', filename='images/dvdPlayer_RemoveBackground.png') }}"
+             alt="DVD player">
+        <form action="{{ url_for('movie') }}" method="POST">
+            <input type="text" name="film" id="movieInput" class="movie-input" placeholder="Enter a movie...!" required>
+            <button type="submit" class="play-button">  play </button>
+        </form>
     </div>
 </section>
+
+
 {% endblock %}
