@@ -1,4 +1,4 @@
-﻿from preproccesor import main_preprocessing
+﻿from cleaner import main_preprocessing
 from training import main_training
 
 def main():
