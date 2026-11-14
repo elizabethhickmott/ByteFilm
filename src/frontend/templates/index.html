@@ -50,9 +50,9 @@ ByteFilm
         <img class="player-img"
              src="{{ url_for('static', filename='images/dvdPlayer_RemoveBackground.png') }}"
              alt="DVD player">
-        <form action="{{ url_for('movie.html') }}" method="POST">
+        <form action="{{ url_for('movie') }}" method="POST">
             <input type="text" name="film" id="movieInput" class="movie-input" placeholder="Enter a movie...!" required>
-            <button type="submit" class="play-button">  PLAY </button>
+            <button type="submit" class="play-button">  play </button>
         </form>
     </div>
 </section>
