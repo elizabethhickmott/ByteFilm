@@ -1,0 +1,13 @@
+:root{
+    --ink:#1c1512;
+    --paper:#eee5d4;
+    --muted:#a89b87;
+    --brown: #6F4E37;
+    --orange:#e58b2b;
+    --blue:#262b7d;
+    --green:#20382a;
+    --line:rgba(238,229,212,.16);
+    --mono:"DM Mono",monospace;
+    --sans:"DM Sans",sans-serif;
+    --serif:"Playfair Display",serif
+}
