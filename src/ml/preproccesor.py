@@ -62,8 +62,6 @@ def data_cleaning(df : pd.DataFrame):
     print(df.isnull().sum())
 
     # Remove outliers to minimize noise
-    # Remove outliers by first identifying them in every column using the interquartile range formula and saving them in the ranges dictionary
-    # The upper and lower ranges are stored in a dictionary where the key is the name of every row and the value is a tuple
     ranges = {}
 
     # Placeholder variables for Q1 and Q3
@@ -93,7 +91,9 @@ def data_cleaning(df : pd.DataFrame):
     print(df.describe())
 
     # Scale
-    df_scaled = preprocessing.MinMaxScaler().fit_transform(df)
+    scaler = preprocessing.MinMaxScaler()
+    df_scaled = df.copy()
+    df_scaled[df.columns] = scaler.fit_transform(df)
 
     return df_scaled
 
