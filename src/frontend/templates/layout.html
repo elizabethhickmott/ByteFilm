@@ -7,6 +7,7 @@
     <meta name="viewport" content="initial-scale=1, width=device-width">
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='movie.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 </head>
 
@@ -17,6 +18,8 @@
         <button class="leaderboard-nav" id="leaderboardNav"><span>★</span> Leaderboard</button>
         <button class="login-nav" id="loginNav"><span>➤</span> Log-in</button>
     </header>
-    <main>{% block main %}{% endblock %}</main>>
+    <main>{% block main %}{% endblock %}</main>
 </body>
+
+
 </html>
