@@ -1,1 +1,4 @@
 ﻿/.idea/
+/src/resources/database/
+/src/ml/OMDB_API_KEY.py
+/src/models/ml_model.pkl
