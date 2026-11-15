@@ -110,7 +110,6 @@
     color: var(--orange);
 }
 
-
 .rankings {
     width: 100%;
     font-family: var(--mono);
@@ -121,9 +120,12 @@
     display: grid;
     grid-template-columns: 0.7fr 2fr 1fr 1fr;
     align-items: center;
+    justify-items: center;
     gap: 10px;
     padding: 18px;
     text-align: center;
+    box-sizing: border-box;
+
 }
 
 .ranking-heading {
@@ -150,7 +152,10 @@
 }
 
 .ranking-name {
-    text-align: left;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .empty-leaderboard {
