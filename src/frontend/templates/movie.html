@@ -6,8 +6,6 @@ ByteFilm
 
 {% block main %}
 
-
-
 <header class="cinema-header">
     <p><b>NOW SHOWING!</b></p>
     <h1>{{ film }}</h1>
@@ -78,12 +76,26 @@ ByteFilm
 
         {% if submitted_prediction is not none %}
         <p class="prediction-success">
-            Your prediction: ${{ "{:,.2f}".format(submitted_prediction) }}
+            Your prediction: ${{submitted_prediction}}
+        </p>
+        {% endif %}
+
+        {% if ml_prediction is not none %}
+         <p class="prediction-success">
+            The model's prediction: ${{ml_prediction}}
+        </p>
+        {% endif %}
+
+         {% if real_box_office is not none %}
+         <p class="prediction-success">
+            The real-box office prediction: {{real_box_office}}
         </p>
         {% endif %}
 
     </div>
 </section>
+
+
 
 
 <section class="movie-info">
