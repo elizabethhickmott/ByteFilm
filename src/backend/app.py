@@ -3,7 +3,7 @@ from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from pathlib import Path
-from ml.OMDB_API_KEY import API_KEY
+from OMDB_API_KEY import API_KEY
 import sqlite3
 
 
