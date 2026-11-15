@@ -41,7 +41,10 @@
 
 .film-container {
     width: 100%;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 20px 0;
+    scroll-behavior: smooth;
 }
 
 .film-strip {
@@ -52,6 +55,8 @@
     padding: 25px 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
+    flex-direction: row;
+    min-width: 100%;
 }
 
 .film-frame {
@@ -60,6 +65,8 @@
     background-color: var(--muted);
     padding: 8px;
     box-sizing: border-box;
+    width: 350px;
+    min-height: 300px;
 }
 
 .film-frame img {
