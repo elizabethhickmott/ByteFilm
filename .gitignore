@@ -2,6 +2,7 @@
 /src/resources/database/
 /src/frontend/OMDB_API_KEY.py
 /src/models/ml_model.pkl
+/src/backend/OMDB_API_KEY.py
 .DS_Store
 *.db
 
