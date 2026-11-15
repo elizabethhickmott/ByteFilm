@@ -32,6 +32,12 @@
             </button>
         </form>
 
+            <form action="{{ url_for('logout') }}" method="get">
+            <button type="submit" class="login-nav" id="loginNav">
+                <span>➤</span> logout
+            </button>
+        </form>
+
     </header>
     <main>{% block main %}{% endblock %}</main>
 </body>
