@@ -389,3 +389,29 @@ main{
 }
 
 
+.flash-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.flash-message.error {
+    background: rgba(180, 50, 35, 0.15);
+    border: 1px solid #c65b45;
+    color: #ff9b85;
+}
+
+.flash-message.success {
+    background: rgba(229, 139, 43, 0.15);
+    border: 1px solid var(--orange);
+    color: var(--muted2);
+}
