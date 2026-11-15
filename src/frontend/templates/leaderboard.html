@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-ByteFilm
+Leaderboard
 {% endblock %}
 
 {% block main %}
@@ -18,57 +18,57 @@ ByteFilm
             <div class="top-player rank-{{ player.rank }}">
                 <div class="player-medal">
                     {% if player.rank == 1 %}
-                        1st
+                    1st
                     {% elif player.rank == 2 %}
-                        2nd
+                    2nd
                     {% else %}
-                        3rd
+                    3rd
                     {% endif %}
                 </div>
                 <h2>#{{player.rank}}</h2>
                 <p class="player-name">{{ player.username }}</p>
                 <p class="player-score">{{ player.score }} points</p>
 
-        </div>
-        {% endfor %}
-    </div>
-
-
-    <div class="rankings">
-        <div class="ranking-heading">
-            <span>RANK</span>
-            <span>PLAYER</span>
-            <span>GAMES</span>
-            <span>POINTS</span>
+            </div>
+            {% endfor %}
         </div>
 
-        {% for player in players %}
-        <div class="ranking-row">
+
+        <div class="rankings">
+            <div class="ranking-heading">
+                <span>RANK</span>
+                <span>PLAYER</span>
+                <span>GAMES</span>
+                <span>POINTS</span>
+            </div>
+
+            {% for player in players %}
+            <div class="ranking-row">
 
             <span class="rank-number">
                 #{{ player.rank }}
             </span>
 
-            <span class="ranking-name">
+                <span class="ranking-name">
                 {{ player.username }}
             </span>
 
-            <span>
+                <span>
                 {{ player.games }}
             </span>
 
-            <span class="ranking-score">
+                <span class="ranking-score">
                 {{ player.score }}
             </span>
+            </div>
+            {% else %}
+            <p class="empty-leaderboard">
+                No players yet. Be the first to make a prediction!
+            </p>
+            {% endfor %}
         </div>
-        {% else %}
-        <p class="empty-leaderboard">
-            No players yet. Be the first to make a prediction!
-        </p>
-        {% endfor %}
     </div>
 </section>
-
 
 
 {% endblock %}
