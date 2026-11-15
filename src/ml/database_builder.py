@@ -1,6 +1,6 @@
 ﻿import pandas as pd
 import requests
-from OMDB_API_KEY import API_KEY
+from frontend.OMDB_API_KEY import API_KEY
 
 
 def main():
