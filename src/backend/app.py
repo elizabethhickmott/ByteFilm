@@ -127,10 +127,16 @@ def index():
 
 @app.route('/register')
 def register():
+    db_conn = sqlite3.connect("database.db")
+    db_cursor = db_conn.cursor
+
     return render_template('register.html')
 
 @app.route('/login')
 def login():
+    db_conn = sqlite3.connect("database.db")
+    db_cursor = db_conn.cursor()
+
     return render_template('login.html')
 
 @app.route('/logout')
