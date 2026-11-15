@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+ByteFilm | Membership
+{% endblock %}
+
+{% block main %}
+
+<section class="auth-section">
+    <div class="auth-card">
+        <div class="auth-tabs">
+            <button type="button" id="loginTab"class="active" onclick="showLogin()"> LOGIN </button>
+            <button type="button" id="signupTab" onclick="showSignUp()"> SIGN UP</button>
+        </div>
+
+        <form id="loginForm" action="/login" method="POST">
+            <h2>Welcome back!</h2>
+
+            <label>USERNAME</label>
+            <input type="text" name="username" placeholder="Your username please" required>
+
+            <label>PASSWORD</label>
+             <input type="password" name="password" placeholder="Your password please" required>
+
+            <button type="submit" class="auth-submit"> submit! </button>
+        </form>
+        <form id="signupForm" action="/signup" method="POST" style="display:none;">
+            <h2>Join ByteFilm!</h2>
+            <label>USERNAME</label>
+            <input type="text" name="username" placeholder="Choose a username" required>
+
+            <label>EMAIL</label>
+            <input type="email" name="email" placeholder="Your email address" required>
+
+            <label>PASSWORD</label>
+            <input type="password" name="password" placeholder="Create a password" required>
+
+            <label>CONFIRM PASSWORD</label>
+            <input type="password" name="confirm_password" placeholder="Confirm your password" required>
+
+            <button type="submit" class="auth-submit"> JOIN BYTEFILM!! </button>
+        </form>
+    </div>
+
+    <p class="auth-footer"> Your cinema seat is booked! <br><br> Come watch and predict a movie with us! :DD </p>
+
+</section>
+
+<script>
+
+function showLogin() {
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("signupForm").style.display = "none";
+    document.getElementById("loginTab").classList.add("active");
+    document.getElementById("signupTab").classList.remove("active");
+}
+
+function showSignUp() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("signupForm").style.display = "block";
+    document.getElementById("signupTab").classList.add("active");
+    document.getElementById("loginTab").classList.remove("active");
+}
+
+</script>
+
+{% endblock %}
