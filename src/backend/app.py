@@ -10,9 +10,6 @@ import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-db_conn = sqlite3.connect("database.db")
-db_cursor = db_conn.cursor()
-
 app = Flask(
     __name__,
     template_folder=str(BASE_DIR / "frontend" / "templates"),
@@ -141,31 +138,19 @@ def logout():
     pass
 
 
-
-#hardcode for the timebeing lol
 @app.route('/leaderboard')
 def leaderboard():
+    db_conn = sqlite3.connect("database.db")
+    db_cursor = db_conn.cursor()
 
-    players = [
-        {
-            "rank": 1,
-            "username": "FilmFan",
-            "games": 12,
-            "score": 950
-        },
-        {
-            "rank": 2,
-            "username": "cinemalovvvver",
-            "games": 10,
-            "score": 850
-        },
-        {
-            "rank": 3,
-            "username": "movieBro",
-            "games": 8,
-            "score": 700
-        }
-    ]
+    db_cursor.execute("SELECT user_name, high_score FROM users ORDER BY high_score DESC")
+    db_data = db_cursor.fetchall()
+    players = []
+
+    rank = 0
+    for row in db_data:
+        players.append({"rank" : rank, "user_name" : row[0], "score" : row[1]})
+        rank += 1
 
     return render_template(
         "leaderboard.html",
