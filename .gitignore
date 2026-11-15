@@ -5,4 +5,5 @@
 /src/backend/OMDB_API_KEY.py
 .DS_Store
 *.db
+/src/backend/OMDB_API_KEY.py
 
