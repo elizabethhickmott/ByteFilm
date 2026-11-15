@@ -39,7 +39,7 @@ This project was also very passionate for Joel, who had been dreaming of doing t
 We hope ByteFilm can continue to improve. This could be through improving our machine learning model to reach a higher accuracy value. Next, hopefully, you will be able to play ByteFilm online and have fun guessing movie box office profit as we do, haha!
 
 ## Images of our application: 
-![Image of the main page](src/frontend/images/Screenshot 2026-11-15 at 11.00.47.png)
+![Image of the main page](src/frontend/images/mainpage.png)
 ![Image of the dvd page](src/frontend/images/dvdpage.png)
 ![Image of the guess page](src/frontend/images/guesspage.png)
 ![Image of the guess page](src/frontend/images/image.png)
