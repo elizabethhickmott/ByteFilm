@@ -63,13 +63,18 @@ def predict():
     film = request.form.get('film')
     prediction = request.form.get('prediction')
     try:
+
         prediction = float(prediction)
 
         if prediction < 0:
             raise ValueError
 
     except (ValueError, TypeError):
-        return "Please enter a valid positive prediction.", 400
+         flash("Please enter a valid positive prediction.", "error")
+
+    db_conn = sqlite3.connect("database.db")
+    db_row_factory = sqlite3.Row
+    db_cursor = db_conn.cursor()
 
     BASE_URL = "http://www.omdbapi.com/"
     api_request = requests.get(BASE_URL, params={"apikey": API_KEY, "t": film}, timeout=15)
@@ -183,6 +188,8 @@ def login():
 
         #   Input the user_id in the session
         session["user_id"] = row["id"]
+        flash("Logged in successfully", "success")
+        return redirect("/")
 
     return render_template('login.html')
 
@@ -204,7 +211,7 @@ def leaderboard():
 
     rank = 0
     for row in db_data:
-        players.append({"rank": rank, "user_name": row[0], "score": row[1]})
+        players.append({"rank": rank, "username": row[0], "score": row[1]})
         rank += 1
 
     return render_template(
