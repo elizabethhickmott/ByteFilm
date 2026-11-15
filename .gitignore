@@ -3,7 +3,8 @@
 /src/frontend/OMDB_API_KEY.py
 /src/models/ml_model.pkl
 /src/backend/OMDB_API_KEY.py
-.DS_Store
+*.DS_Store
 *.db
-/src/backend/OMDB_API_KEY.py
+/src/backend/__pycache__
+/src/backend/flask_session
 

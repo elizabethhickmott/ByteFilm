@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, session, redirect, request
+﻿from flask import Flask, render_template, session, redirect, request, flash
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from pathlib import Path
@@ -10,9 +10,6 @@ import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-db_conn = sqlite3.connect("database.db")
-db_cursor = db_conn.cursor()
-
 app = Flask(
     __name__,
     template_folder=str(BASE_DIR / "frontend" / "templates"),
@@ -23,14 +20,13 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+
 @app.route('/movie', methods=['GET', 'POST'])
 def movie():
-
     BASE_URL = "http://www.omdbapi.com/"
     POSTER_BASE_URL = "http://img.omdbapi.com/"
 
     if request.method == 'POST':
-
         film = request.form.get('film')
         api_request = requests.get(BASE_URL, params={"apikey": API_KEY, "t": film}, timeout=15)
         data = api_request.json()
@@ -44,8 +40,8 @@ def movie():
             genre=data.get("Genre"),
             runtime=data.get("Runtime"),
             submitted_prediction=None,
-            ml_prediction = None,
-            real_box_office = None
+            ml_prediction=None,
+            real_box_office=None
         )
 
     return render_template(
@@ -57,22 +53,28 @@ def movie():
         genre="",
         runtime="",
         submitted_prediction=None,
-        ml_prediction = None,
-        real_box_office = None
+        ml_prediction=None,
+        real_box_office=None
     )
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
     film = request.form.get('film')
     prediction = request.form.get('prediction')
     try:
+
         prediction = float(prediction)
 
         if prediction < 0:
             raise ValueError
 
     except (ValueError, TypeError):
-        return "Please enter a valid positive prediction.", 400
+         flash("Please enter a valid positive prediction.", "error")
+
+    db_conn = sqlite3.connect("database.db")
+    db_conn.row_factory = sqlite3.Row
+    db_cursor = db_conn.cursor()
 
     BASE_URL = "http://www.omdbapi.com/"
     api_request = requests.get(BASE_URL, params={"apikey": API_KEY, "t": film}, timeout=15)
@@ -84,6 +86,22 @@ def predict():
 
     ml_prediction = model.predict(movie_df)
 
+    percentage_difference = abs(prediction - ml_prediction[0]) / abs(ml_prediction[0])
+
+    points = 0
+
+    if percentage_difference <= 0.1:
+        points = 5
+    elif percentage_difference >= 0.5:
+        points = 3
+    else:
+        points = 1
+
+    current_points = db_cursor.execute("SELECT high_score FROM users where id = ?", (session["user_id"],)).fetchone()
+    current_points = current_points[0] if current_points else 0
+    db_cursor.execute("UPDATE users SET high_score = ? WHERE id = ?", (current_points + points, session["user_id"]))
+    db_conn.commit()
+
     return render_template(
         'movie.html',
         film=film,
@@ -93,9 +111,10 @@ def predict():
         genre=data.get("Genre"),
         runtime=data.get("Runtime"),
         submitted_prediction=prediction,
-        ml_prediction = ml_prediction[0],
-        real_box_office = data.get("BoxOffice")
+        ml_prediction=ml_prediction[0],
+        real_box_office=data.get("BoxOffice")
     )
+
 
 def create_movie_df(data):
     final_df = pd.DataFrame()
@@ -126,20 +145,92 @@ def create_movie_df(data):
 
 @app.route('/')
 def index():
+    if "user_id" not in session:
+        flash("You have to be logged in to view this page.", "error")
+        return redirect("/login")
+
     return render_template('index.html')
 
-@app.route('/register')
-def register():
-    return render_template('register.html')
 
-@app.route('/login')
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    db_conn = sqlite3.connect("database.db")
+    db_cursor = db_conn.cursor()
+
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirmed_password = request.form.get('confirm_password')
+
+        if password != confirmed_password:
+            flash('Passwords do not match.', "error")
+            redirect("/login")
+
+        if not username or not password:
+            flash('Please fill out all fields.', "error")
+            redirect("/login")
+
+        password = generate_password_hash(password)
+
+        try:
+            db_cursor.execute("INSERT INTO users (user_name, password) VALUES (?, ?)", (username, password))
+            db_conn.commit()
+            flash("Your account has been created, please log in")
+            return redirect("/login")
+        except ValueError:
+            flash(f"The username: {username} is already taken", "error")
+            return redirect("/login")
+
+    return render_template("login.html")
+
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    db_conn = sqlite3.connect("database.db")
+    db_conn.row_factory = sqlite3.Row
+    db_cursor = db_conn.cursor()
+
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        #   Query the SQL database to look for a match for the username
+        row = db_cursor.execute("SELECT * FROM users WHERE user_name = ?", (username,)).fetchone()
+
+        #   Check that the username and password match an account in the database
+        if row is None or not check_password_hash(row["password"], password):
+            flash("Invalid username and/or password", "error")
+            return redirect("/")
+
+        #   Input the user_id in the session
+        session["user_id"] = row["id"]
+        flash("Logged in successfully", "success")
+        return redirect("/")
+
     return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
-    pass
+    session.clear()
+    return redirect("/")
+
 
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+    db_conn = sqlite3.connect("database.db")
+    db_cursor = db_conn.cursor()
+
+    db_cursor.execute("SELECT user_name, high_score FROM users ORDER BY high_score DESC")
+    db_data = db_cursor.fetchall()
+    players = []
+
+    rank = 0
+    for row in db_data:
+        players.append({"rank": rank, "username": row[0], "score": row[1]})
+        rank += 1
+
+    return render_template(
+        "leaderboard.html",
+        players=players
+    )

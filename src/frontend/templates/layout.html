@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='movie.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='leaderboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 </head>
 
@@ -31,8 +32,28 @@
             </button>
         </form>
 
+            <form action="{{ url_for('logout') }}" method="get">
+            <button type="submit" class="login-nav" id="loginNav">
+                <span>➤</span> logout
+            </button>
+        </form>
+
     </header>
-    <main>{% block main %}{% endblock %}</main>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block main %}{% endblock %}
+</main>
 </body>
 
 
