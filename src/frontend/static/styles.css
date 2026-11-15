@@ -301,9 +301,9 @@ main{
 .movie-input {
     position: absolute;
     z-index: 3;
-    top: 70%;
-    left: 3%;
-    width: 85%;
+    top: 100px;
+    left: -170px;
+    width: 200px;
     padding: 12px;
     box-sizing: border-box;
     background: #171513;
@@ -362,3 +362,30 @@ main{
 .player-screen input::placeholder {
     color: #c5b9a8;
 }
+
+.player form {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.play-button {
+    position:absolute;
+    left: -40px;
+    font:15px var(--mono);
+    letter-spacing:.15em;
+    color:var(--brown);
+    text-align:center;
+    padding: 1rem 1.4rem;
+    background: rgba(229, 188, 141, 0.92);
+    border: 2px solid var(--brown);
+    border-radius: 14px;
+    box-shadow: 2px 2px 0 var(--brown);
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+

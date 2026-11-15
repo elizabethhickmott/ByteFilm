@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block title %}
+ByteFilm
+{% endblock %}
+
+{% block main %}
+
+<header class="cinema-header">
+    <p><b>NOW SHOWING!</b></p>
+    <h1>{{ film }}</h1>
+</header>
+
+
+<section class="movie-poster">
+    <div class="film-container">
+        <div class="film-strip">
+            <div class="film-frame poster">
+                {% if poster %}
+                    <img src="{{ poster }}" alt="{{ film }} movie poster">
+                {% else %}
+                    <div class="empty-frame">
+                        <span>BYTEFILM</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="film-frame info">
+                <span class="frame-label">About</span>
+                <h2>About the film</h2>
+                <p>{{ overview }}</p>
+            </div>
+
+            <div class="film-frame info">
+                <span class="frame-label">Release</span>
+                <h2>Release year</h2>
+                <p>{{ year }}</p>
+            </div>
+
+            <div class="film-frame info">
+                <span class="frame-label">Genre</span>
+                <h2>Genre</h2>
+                <p>{{ genre }}</p>
+            </div>
+
+            <div class="film-frame info">
+                <span class="frame-label">Running time</span>
+                <h2>Duration</h2>
+                <p>{{ runtime }}</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="prediction">
+    <div class="prediction-sec">
+        <div class="prediction-heading">
+            <p>YOUR GUESS!</p>
+            <h2>Predict how much {{ film }} will make at box office</h2>
+        </div>
+
+        <form action="{{ url_for('predict') }}" method="POST" class="prediction-form">
+            <input type="hidden" name="film" value="{{ film }}">
+            <label for="prediction"> Your box office prediction ($)</label>
+
+            <div class="prediction-input">
+                <input type="number" id="prediction" name="prediction" placeholder="e.g.10000000000" min="0" step="any" required>
+            </div>
+
+            <button type="submit" class="prediction-button">
+                SUBMIT
+            </button>
+        </form>
+
+        {% if submitted_prediction is not none %}
+        <p class="prediction-success">
+            Your prediction: ${{submitted_prediction}}
+        </p>
+        {% endif %}
+
+        {% if ml_prediction is not none %}
+         <p class="prediction-success">
+            The model's prediction: ${{ml_prediction}}
+        </p>
+        {% endif %}
+
+         {% if real_box_office is not none %}
+         <p class="prediction-success">
+            The real-box office prediction: {{real_box_office}}
+        </p>
+        {% endif %}
+
+    </div>
+</section>
+
+
+
+
+<section class="movie-info">
+    <p>Now playing: {{ film }}</p>
+</section>
+
+
+
+
+{% endblock %}
