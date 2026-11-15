@@ -140,6 +140,34 @@ def login():
 def logout():
     pass
 
+
+
+#hardcode for the timebeing lol
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+
+    players = [
+        {
+            "rank": 1,
+            "username": "FilmFan",
+            "games": 12,
+            "score": 950
+        },
+        {
+            "rank": 2,
+            "username": "cinemalovvvver",
+            "games": 10,
+            "score": 850
+        },
+        {
+            "rank": 3,
+            "username": "movieBro",
+            "games": 8,
+            "score": 700
+        }
+    ]
+
+    return render_template(
+        "leaderboard.html",
+        players=players
+    )
