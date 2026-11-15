@@ -40,11 +40,12 @@ We hope ByteFilm can continue to improve. This could be through improving our ma
 
 ## Images of our application: 
 ![Image of the main page](src/frontend/images/Screenshot 2026-11-15 at 11.00.47.png)
-![Image of the dvd page](src/frontend/images/Screenshot 2026-11-15 at 11.00.58.png)
+![Image of the dvd page](src/frontend/images/dvdpage.png)
+![Image of the guess page](src/frontend/images/guesspage.png)
 ![Image of the guess page](src/frontend/images/image.png)
-![Image of the leaderboard page](src/frontend/images/Screenshot 2026-11-15 at 11.01.18.png)
-![Image of the login page](src/frontend/images/Screenshot 2026-11-15 at 11.01.25.png)
-![Image of the signin page](src/frontend/images/Screenshot 2026-11-15 at 11.01.33.png)
+![Image of the leaderboard page](src/frontend/images/leaderboardpage.png)
+![Image of the login page](src/frontend/images/loginpage.png)
+![Image of the signin page](src/frontend/images/signin.png)
 
 Enjoy playing, 
 Liz and Joel :D
