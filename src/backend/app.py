@@ -73,7 +73,7 @@ def predict():
          flash("Please enter a valid positive prediction.", "error")
 
     db_conn = sqlite3.connect("database.db")
-    db_row_factory = sqlite3.Row
+    db_conn.row_factory = sqlite3.Row
     db_cursor = db_conn.cursor()
 
     BASE_URL = "http://www.omdbapi.com/"
@@ -85,6 +85,22 @@ def predict():
     movie_df = create_movie_df(data)
 
     ml_prediction = model.predict(movie_df)
+
+    percentage_difference = abs(prediction - ml_prediction[0]) / abs(ml_prediction[0])
+
+    points = 0
+
+    if percentage_difference <= 0.1:
+        points = 5
+    elif percentage_difference >= 0.5:
+        points = 3
+    else:
+        points = 1
+
+    current_points = db_cursor.execute("SELECT high_score FROM users where id = ?", (session["user_id"],)).fetchone()
+    current_points = current_points[0] if current_points else 0
+    db_cursor.execute("UPDATE users SET high_score = ? WHERE id = ?", (current_points + points, session["user_id"]))
+    db_conn.commit()
 
     return render_template(
         'movie.html',
